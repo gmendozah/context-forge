@@ -1,0 +1,9 @@
+model_selections:
+  parallel_model: "gemini-3.5-flash"
+  synthesis_model: "gemini-3.1-pro-preview"
+file_paths:
+  master_cv: "master_cv.md"
+  job_description: "jd.txt"
+hyperparameters:
+  temperature: 0.2
+  top_p: 0.8
