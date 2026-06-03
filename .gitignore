@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Testing caches
+.pytest_cache/
+
 # Distribution / packaging
 build/
 dist/
@@ -22,7 +25,7 @@ env/
 
 # Environment variables & secrets
 .env
-.env.*
+.env.local
 *.key
 
 # ContextForge Specific / Candidate private data
@@ -31,3 +34,11 @@ master_cv2.md
 jd.txt
 *tailored*.md
 *output*.md
+
+# Compiled Output Formats (PDFs, Typst, LaTeX artifacts)
+*.pdf
+*.typ
+*.log
+*.aux
+*.out
+*.toc

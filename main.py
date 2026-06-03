@@ -3,9 +3,13 @@ import asyncio
 import logging
 import sys
 import yaml
+from dotenv import load_dotenv
 
 from core.parser import parse_master_cv, read_job_description
 from engine.orchestrator import run_parallel_pipeline
+
+# Load local environment variables from .env file at startup
+load_dotenv()
 
 # Configure basic logging
 logging.basicConfig(
