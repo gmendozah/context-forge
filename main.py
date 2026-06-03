@@ -31,6 +31,7 @@ async def main():
     parser.add_argument("--config", type=str, default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--cv", type=str, help="Path to master_cv.md (overrides config)")
     parser.add_argument("--jd", type=str, help="Path to jd.txt (overrides config)")
+    parser.add_argument("--dry-run", action="store_true", help="Print parsed chunks and exit without calling the LLM API")
     args = parser.parse_args()
 
     logger.info("Initializing ContextForge CLI Phase 1...")
@@ -50,6 +51,16 @@ async def main():
     if not chunks:
         logger.error("Failed to parse Master CV or CV is empty. Exiting.")
         sys.exit(1)
+
+    if args.dry_run:
+        logger.info(f"Dry Run: Parsed {len(chunks)} chunks from Master CV:")
+        for idx, chunk in enumerate(chunks, 1):
+            print(f"\n[{idx}/{len(chunks)}] Heading: {chunk['heading']}")
+            print(f"Content Length: {len(chunk['content'])} characters")
+            print("-" * 30)
+            preview = chunk['content'][:150].replace('\n', ' ')
+            print(f"Preview: {preview}...")
+        sys.exit(0)
 
     jd_content = read_job_description(jd_path)
     if not jd_content:

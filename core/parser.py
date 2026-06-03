@@ -15,10 +15,10 @@ def parse_master_cv(file_path: str) -> List[Dict[str, str]]:
     current_content = []
     
     for line in lines:
-        if line.startswith('### '):
+        if line.startswith('## ') or line.startswith('### '):
             content_str = '\n'.join(current_content).strip()
-            # Save the previous chunk if it has actual content or isn't the preamble
-            if content_str or current_heading != "Preamble":
+            # Save the previous chunk only if it has actual content
+            if content_str:
                 chunks.append({
                     "heading": current_heading,
                     "content": content_str
@@ -30,7 +30,7 @@ def parse_master_cv(file_path: str) -> List[Dict[str, str]]:
             
     # Add the last chunk
     content_str = '\n'.join(current_content).strip()
-    if content_str or current_heading != "Preamble":
+    if content_str:
         chunks.append({
             "heading": current_heading,
             "content": content_str
