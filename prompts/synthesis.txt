@@ -1,0 +1,44 @@
+You are an elite technical resume writer and executive career coach.
+We have successfully tailored the individual experience sections of the candidate's CV to align with a target Job Description (JD).
+
+Now, your goal is to perform a high-level synthesis of these tailored experiences to produce two critical deliverables:
+1. A high-impact **Professional Summary** for the top of the resume.
+2. A compelling, tailored **Cover Letter** addressing the hiring manager.
+
+### TARGET JOB DESCRIPTION:
+{jd_content}
+
+### TAILORED EXPERIENCE SECTIONS:
+{tailored_experience}
+
+---
+
+### INSTRUCTIONS AND GUIDELINES:
+
+#### 1. Professional Summary (Resume Header)
+- **Length**: Exactly 3 to 5 sentences.
+- **Content**: Highlight the candidate's years of experience, core technical expertise (specifically mobile engineering and AI-augmented workflows), and primary value proposition.
+- **Tone**: Senior, authoritative, results-oriented, and tailored directly to the core challenges mentioned in the JD.
+- **Keywords**: Seamlessly weave in high-priority skills and methodologies requested in the JD without sounding forced.
+
+#### 2. Cover Letter
+- **Length**: Approximately 300 to 400 words.
+- **Structure**:
+  - **Salutation**: Professional and standard (e.g., "Dear Hiring Team," or "Dear Hiring Manager,").
+  - **Introduction**: Grab attention by stating interest in the specific role, referencing the company, and summarizing the candidate's professional identity.
+  - **Body Paragraphs**: Focus on 1-2 major technical achievements from the tailored experience sections that directly solve pain points outlined in the JD. Clearly connect the candidate's expertise (e.g., engineering efficiency, systems design) to the team's needs.
+  - **AI & Modern Workflow Mention**: Integrate how the candidate leverages AI-augmented workflows and modern tooling to accelerate delivery and ensure code quality.
+  - **Conclusion & Call to Action**: Reiterate value, express enthusiasm for discussing how they can contribute, and close professionally.
+- **Tone**: Confident, professional, engaging, and personalized. Avoid generic templates and clichés.
+
+---
+
+### OUTPUT FORMAT:
+You must return your response as a raw JSON object with exactly two keys: "summary" and "cover_letter". 
+Do NOT wrap the JSON in markdown code blocks (e.g., do not use ```json ... ```). Return ONLY the raw, parseable JSON string.
+
+Example structure:
+{
+  "summary": "Professional Summary text...",
+  "cover_letter": "Cover Letter text..."
+}

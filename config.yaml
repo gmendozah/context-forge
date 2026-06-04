@@ -4,6 +4,29 @@ model_selections:
 file_paths:
   master_cv: "master_cv.md"
   job_description: "jd.txt"
+  typst_template: "templates/resume.typ"
+  output_pdf: "resume.pdf"
+  output_cover_letter: "cover_letter.txt"
 hyperparameters:
   temperature: 0.2
   top_p: 0.8
+
+chunking:
+  # Strategies: 'by_header_depth' (default), 'by_section', 'single_document'
+  strategy: "by_header_depth"
+  skip_sections:
+    - "## 👤 Personal & Contact Information"
+    - "## 🎓 Formal Education"
+    - "## 🗣 Languages"
+    - "## 🏆 Honors & Awards"
+    - "## 📜 Advanced Certifications & Specialized Training"
+
+api_limits:
+  # Limit the concurrent API calls
+  concurrency_limit: 3
+  # Delay (in seconds) between requests to avoid burst rate limits
+  request_delay: 0.5
+
+prompts:
+  tailor_chunk: "prompts/tailor_chunk.txt"
+  synthesis: "prompts/synthesis.txt"

@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 
 from core.parser import parse_master_cv, read_job_description
 from engine.orchestrator import run_parallel_pipeline
+from engine.synthesis import run_synthesis_pipeline
+from core.compiler import parse_sections_to_structured_data
+from generator import generate_resume
 
 # Load local environment variables from .env file at startup
 load_dotenv()
@@ -35,6 +38,7 @@ async def main():
     parser.add_argument("--config", type=str, default="config.yaml", help="Path to config.yaml")
     parser.add_argument("--cv", type=str, help="Path to master_cv.md (overrides config)")
     parser.add_argument("--jd", type=str, help="Path to jd.txt (overrides config)")
+    parser.add_argument("--strategy", type=str, choices=["by_header_depth", "by_section", "single_document"], help="Chunking strategy (overrides config)")
     parser.add_argument("--dry-run", action="store_true", help="Print parsed chunks and exit without calling the LLM API")
     args = parser.parse_args()
 
@@ -46,12 +50,17 @@ async def main():
     # Resolve file paths
     cv_path = args.cv or config.get("file_paths", {}).get("master_cv", "master_cv.md")
     jd_path = args.jd or config.get("file_paths", {}).get("job_description", "jd.txt")
+    
+    # Resolve chunking strategy
+    chunking_config = config.get("chunking", {})
+    strategy = args.strategy or chunking_config.get("strategy", "by_header_depth")
 
     logger.info(f"Master CV path: {cv_path}")
     logger.info(f"Job Description path: {jd_path}")
+    logger.info(f"Chunking strategy: {strategy}")
 
     # Parse inputs
-    chunks = parse_master_cv(cv_path)
+    chunks = parse_master_cv(cv_path, strategy=strategy)
     if not chunks:
         logger.error("Failed to parse Master CV or CV is empty. Exiting.")
         sys.exit(1)
@@ -75,13 +84,42 @@ async def main():
     results = await run_parallel_pipeline(chunks, jd_content, config)
 
     # Output intermediate structured results safely
-    logger.info("Pipeline execution complete. Structured output:")
+    logger.info("Pipeline execution complete. Structured output generated.")
+
+    # Concurrently aggregate tailored experience sections for synthesis input
+    tailored_experiences_list = []
     for res in results:
-        print("\n" + "="*50)
-        print(f"HEADING: {res.get('heading')}")
-        print("-" * 50)
-        print(f"{res.get('tailored_content')}")
-        print("="*50 + "\n")
+        heading = res.get("heading", "")
+        if heading.startswith("### "):
+            tailored_experiences_list.append(f"{heading}\n{res.get('tailored_content')}")
+    tailored_experiences_str = "\n\n".join(tailored_experiences_list)
+
+    # Run Phase 2: Sequential Synthesis for summary and cover letter
+    logger.info("Executing synthesis pipeline (Professional Summary & Cover Letter)...")
+    synthesis_res = await run_synthesis_pipeline(tailored_experiences_str, jd_content, config)
+    tailored_summary = synthesis_res.get("summary", "")
+    cover_letter = synthesis_res.get("cover_letter", "")
+
+    # Save the Cover Letter if generated
+    if cover_letter:
+        cl_path = config.get("file_paths", {}).get("output_cover_letter", "cover_letter.txt")
+        try:
+            with open(cl_path, "w", encoding="utf-8") as f:
+                f.write(cover_letter)
+            logger.info(f"Successfully saved Cover Letter to: {cl_path}")
+        except Exception as e:
+            logger.error(f"Error saving Cover Letter file: {e}")
+
+    # Run Phase 3: Typst compilation
+    logger.info("Parsing results into structured resume data...")
+    structured_data = parse_sections_to_structured_data(results, tailored_summary)
+    
+    output_pdf_path = config.get("file_paths", {}).get("output_pdf", "resume.pdf")
+    
+    try:
+        generate_resume(structured_data, output_pdf_path)
+    except Exception as e:
+        logger.error(f"Failed to generate resume: {e}")
 
 if __name__ == "__main__":
     # Use standard library asyncio to run the async entry point
