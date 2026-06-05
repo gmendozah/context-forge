@@ -1,0 +1,295 @@
+{
+  "name": "Alex Mercer",
+  "title": "Senior Mobile Engineer",
+  "contact_info": [
+    "San Francisco, CA",
+    "alex.mercer@example.com",
+    "+1 (555) 0199",
+    "linkedin.com/in/alex-mercer",
+    "github.com/alex-mercer"
+  ],
+  "summary": "Highly skilled Senior Mobile Engineer with over 8 years of experience building, shipping, and scaling high-performance consumer-facing and enterprise mobile applications across iOS and Android. Strong proficiency in Dart and deep knowledge of clean architecture patterns, reactive programming, and complex state management frameworks like BLoC and Riverpod. Proven track record in high-growth environments, expertly leveraging AI-assisted development tools including Cursor, Claude Code, and GitHub Copilot to accelerate feature delivery. Collaborative communicator recognized for translating product requirements into seamless, low-latency mobile experiences while optimizing system architecture for rapid scaling.",
+  "skills": [
+    {
+      "name": "Cross-Platform Ecosystems",
+      "items": [
+        "Flutter",
+        "Dart",
+        "React Native"
+      ]
+    },
+    {
+      "name": "Native Ecosystems",
+      "items": [
+        "iOS (Swift, UIKit, SwiftUI)",
+        "Android (Kotlin, Jetpack Compose, Java)"
+      ]
+    },
+    {
+      "name": "Architecture & State Management",
+      "items": [
+        "Clean Architecture",
+        "Domain-Driven Design (DDD)",
+        "BLoC / Cubit",
+        "Riverpod",
+        "Provider",
+        "MVVM",
+        "SOLID Principles"
+      ]
+    },
+    {
+      "name": "AI-Augmented & Agentic Workflows",
+      "items": [
+        "Cursor",
+        "Claude Code",
+        "GitHub Copilot",
+        "Context Engineering",
+        "Advanced Prompt Engineering"
+      ]
+    },
+    {
+      "name": "Data Persistence & Integrations",
+      "items": [
+        "REST APIs",
+        "GraphQL",
+        "Firebase",
+        "SQLite",
+        "Isar",
+        "Hive",
+        "OAuth 2.0"
+      ]
+    },
+    {
+      "name": "CI/CD & Testing",
+      "items": [
+        "Codemagic",
+        "GitHub Actions",
+        "Fastlane",
+        "Maestro (Automated E2E)",
+        "Unit & Widget Testing"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "LogiTech Solutions",
+      "role": "Senior Mobile Engineer",
+      "dates": "Jun 2023 – Dec 2025",
+      "location": "San Francisco, CA (Remote)",
+      "description": "Led the architectural overhaul and performance tuning of a high-concurrency mobile ecosystem, accelerating delivery via AI-assisted engineering.",
+      "bullets": [
+        {
+          "type": "subheading",
+          "text": "Architecture & Core Engineering"
+        },
+        {
+          "type": "bullet",
+          "text": "Accomplished architectural decoupling of legacy monoliths into a Clean Architecture framework using BLoC/Cubit, as measured by successfully supporting a 600% surge in mobile traffic, by abstracting complex business logic."
+        },
+        {
+          "type": "bullet",
+          "text": "Engineered a high-integrity, offline-first synchronization engine utilizing SQLite and Isar for persistent caching, enabling seamless cross-user Work Order handoffs and CRUD operations in zero-connectivity environments."
+        },
+        {
+          "type": "bullet",
+          "text": "Integrated native Markdown and HTML parsers to reliably render complex industrial Wiki content, including nested tables and dynamic embedded iframes, directly within Flutter widgets."
+        },
+        {
+          "type": "subheading",
+          "text": "AI-Augmented Engineering & Performance Optimization"
+        },
+        {
+          "type": "bullet",
+          "text": "Pioneered agentic development workflows by integrating advanced LLMs (Claude, Gemini, GPT-4) and Cursor, accelerating legacy refactoring and significantly shortening UI/UX delivery cycles."
+        },
+        {
+          "type": "bullet",
+          "text": "Optimized multi-level download trees and heavy UI rendering by replacing redundant recursive scans and inefficient chains with reactive, Stream-based rebuilds, reducing download-state aggregation complexity from O(n × m) to O(n)."
+        },
+        {
+          "type": "bullet",
+          "text": "Mitigated critical memory leaks across iOS and Android by isolating unhandled embedded video player threads into responsive iframes, eliminating app crashes and UI lag."
+        },
+        {
+          "type": "bullet",
+          "text": "Architected the foundational AI documentation pipeline for automated industrial manual digitization, integrating Amazon Bedrock and Claude to establish a 70% initial extraction accuracy baseline."
+        }
+      ]
+    },
+    {
+      "company": "GlobalTech (Client: LearnSpace)",
+      "role": "Senior Mobile Engineer",
+      "dates": "Nov 2021 – May 2023",
+      "location": "San Jose, CA (Remote)",
+      "description": "Engineered a flagship cross-platform mobile application for course creators, integrating AI-assisted workflows to accelerate feature delivery.",
+      "bullets": [
+        {
+          "type": "subheading",
+          "text": "Core Engineering & Feature Delivery"
+        },
+        {
+          "type": "bullet",
+          "text": "Architected the flagship mobile application by engineering complex core modules, including a multi-tenant login system with dynamic deep links and a 'Communities' feature supporting nested threads and multi-format media."
+        },
+        {
+          "type": "bullet",
+          "text": "Spearheaded a strategic architectural migration from a legacy, proprietary BLoC implementation to community-standard libraries, authoring RFCs and utilizing AI-prompting for rapid boilerplate generation to eliminate infinite login loops."
+        },
+        {
+          "type": "bullet",
+          "text": "Engineered highly reusable PaginatedListView components by integrating Equatable for precise object comparison and optimizing network queries, utilizing AI pair-programming with GitHub Copilot to rapidly prototype UI variants."
+        },
+        {
+          "type": "bullet",
+          "text": "Developed a custom cross-platform file explorer package, writing native MethodChannels to handle complex file system interactions and ensure seamless document and media handling across iOS and Android."
+        },
+        {
+          "type": "subheading",
+          "text": "Optimization & DevOps Testing"
+        },
+        {
+          "type": "bullet",
+          "text": "Optimized complex UI screens by refactoring for granular state mutations and overhauling WebView orientation handling, completely eliminating severe Android memory overflow crashes and drastically reducing UI jank."
+        },
+        {
+          "type": "bullet",
+          "text": "Pioneered the integration of automated End-to-End (E2E) testing across critical flows using Maestro, Codemagic, and Semaphore CI, utilizing AI code generation to accelerate YAML scripting and prevent production routing regressions."
+        }
+      ]
+    },
+    {
+      "company": "DevStudio Solutions",
+      "role": "Senior Mobile Engineer",
+      "dates": "Aug 2020 – Nov 2021",
+      "location": "Miami, FL (Remote)",
+      "description": "Spearheaded technical delivery for an enterprise-grade fintech ecosystem and a multi-role EdTech platform.",
+      "bullets": [
+        {
+          "type": "bullet",
+          "text": "Engineered a highly secure fintech ecosystem utilizing Clean Architecture and BLoC, integrating AES encryption, Keychain/Keystore protection, and biometric authentication to pass IBM X-Force Red penetration testing with 0 critical vulnerabilities."
+        },
+        {
+          "type": "bullet",
+          "text": "Streamlined production application binaries and fortified reverse-engineering defenses via strict code obfuscation and ProGuard, achieving a 32% reduction in final release bundle sizes."
+        },
+        {
+          "type": "bullet",
+          "text": "Optimized client-server resilience by engineering a proactive API interception layer using Dio synchronized with F5 Load Balancer configurations, gracefully mitigating backend downtime and eliminating frontend crashes."
+        },
+        {
+          "type": "bullet",
+          "text": "Spearheaded the end-to-end mobile release lifecycle, launching the fintech beta application in under 4 months and securing over 50,000 downloads on schedule."
+        },
+        {
+          "type": "bullet",
+          "text": "Enforced rigorous Test-Driven Development (TDD) protocols through comprehensive Unit, Widget, and Integration tests, maintaining strict static analysis with 0 Dart Analyzer warnings."
+        }
+      ]
+    },
+    {
+      "company": "InsureCloud Systems",
+      "role": "Mobile Solutions Consultant (Contract)",
+      "dates": "May 2020 – Jul 2020",
+      "location": "Austin, TX (Remote)",
+      "description": "Architected and deployed a highly scalable, multi-tenant mobile ecosystem for a prominent automotive insurance enterprise within an accelerated timeline.",
+      "bullets": [
+        {
+          "type": "bullet",
+          "text": "Architected a scalable, multi-tenant mobile ecosystem supporting two distinct enterprise applications, integrating a unified Keycloak Identity and Access Management (IAM) provider to standardize cross-platform authentication."
+        },
+        {
+          "type": "bullet",
+          "text": "Optimized large-scale list rendering and data fetching by implementing cursor-based pagination and advanced data table filtering, accelerating administrative dashboard load times by over 40%."
+        },
+        {
+          "type": "bullet",
+          "text": "Mitigated critical technical debt through active bottleneck resolution and structural modernizations, unblocking parallel development streams and increasing new feature velocity by an estimated 40%."
+        },
+        {
+          "type": "bullet",
+          "text": "Led high-stakes client demonstrations and beta-testing cycles, systematically incorporating stakeholder UI/UX feedback to refine data taxonomy and accelerate product-market fit by 30%."
+        }
+      ]
+    },
+    {
+      "company": "IoTBridge Inc",
+      "role": "Mobile Systems Developer & SDK Specialist",
+      "dates": "Aug 2018 – Jul 2020",
+      "location": "Seattle, WA (Hybrid)",
+      "description": "Stabilized and scaled complex IoT enterprise ecosystems and mobile applications for SoftBank-backed hardware.",
+      "bullets": [
+        {
+          "type": "bullet",
+          "text": "Architected a reactive data-synchronization bridge for an enterprise Ionic supply chain application, mapping legacy OOP/MVC paradigms to eliminate data loss during high-frequency Zebra barcode scans within a strict 4-month deadline."
+        },
+        {
+          "type": "bullet",
+          "text": "Accelerated the final-mile MVP delivery of the SoftBank-backed 'Hey Koko' hardware ecosystem by resolving real-time, low-latency audio transmission bottlenecks, unblocking critical product features within a high-pressure 2-month deadline."
+        },
+        {
+          "type": "bullet",
+          "text": "Orchestrated the lifecycle maintenance and architectural stability of native Android SDK modules, optimizing raw input capture from physical scanners to securely transmit high-throughput telemetry streams into Cloud IoT infrastructure."
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Parkin - Urban Mobility Startup",
+      "description": "Developed an urban mobility startup optimizing city parking infrastructure. Awarded 1st Place at Fintech Innovation Award, Digital Bank Latam (2018).",
+      "link": null,
+      "dates": "2018"
+    },
+    {
+      "name": "Intelligent Risk Assessment Calculator",
+      "description": "Built an intelligent risk assessment calculator for dynamic mortgage and auto loan estimations. Awarded 3rd Place at Hackathon BNB, Banco Nacional de Bolivia S.A. (2016).",
+      "link": null,
+      "dates": "2016"
+    }
+  ],
+  "education": [
+    {
+      "institution": "State Technical University",
+      "degree": "Systems Engineer",
+      "dates": "2013 - 2018",
+      "location": "San Francisco, CA"
+    },
+    {
+      "institution": "Online Learning Platform",
+      "degree": "Nanodegree Program, Artificial Intelligence & Data Science",
+      "dates": "2019 – 2020",
+      "location": null
+    }
+  ],
+  "certifications": [
+    {
+      "name": "iOS Developer Professional Certificate",
+      "issuer": "Meta (Coursera)",
+      "dates": "2026"
+    },
+    {
+      "name": "Android Kotlin Developer",
+      "issuer": "Udacity",
+      "dates": "2026"
+    },
+    {
+      "name": "React Native",
+      "issuer": "Meta",
+      "dates": "2026"
+    },
+    {
+      "name": "Advanced Programming in Swift",
+      "issuer": "Meta",
+      "dates": "2026"
+    },
+    {
+      "name": "Scrum Foundations Professional Certificate (SFPC)",
+      "issuer": "Certiprof",
+      "dates": "2020"
+    }
+  ],
+  "languages": [
+    "English (Full Professional Proficiency / C2 Level Certified)",
+    "Spanish (Native)"
+  ]
+}

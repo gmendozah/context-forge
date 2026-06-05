@@ -1,0 +1,33 @@
+{
+  "recipient_name": "John Doe",
+  "recipient_title": "Hiring Director",
+  "company_name": "InnovateCorp",
+  "date": "June 5, 2026",
+  "salutation": "Dear John",
+  "body_paragraphs": [
+    "I am writing to apply for the Senior Mobile Engineer position at InnovateCorp. With over 8 years of experience building scalable applications, I am excited about the opportunity.",
+    "During my tenure at LogiTech Solutions, I spearheaded the migration of legacy monoliths to Clean Architecture using BLoC, which supported a 600% surge in mobile traffic. I also engineered an offline-first sync engine using Isar, resolving critical dynamic login synchronization issues.",
+    "I look forward to discussing how my background in high-performance system design and AI-augmented workflows can bring value to the engineering team at InnovateCorp."
+  ],
+  "signoff": "Sincerely",
+  "candidate_name": "Alex Mercer",
+  "candidate_title": "Senior Mobile Engineer",
+  "candidate_contact": [
+    "San Francisco, CA",
+    "alex.mercer@example.com",
+    "+1 (555) 0199"
+  ],
+  "company_research": {
+    "company_name": "InnovateCorp",
+    "mission_and_values": "Our mission is to build highly innovative software that streamlines operations and leverages bleeding-edge modern technologies to optimize workflows.",
+    "role_challenges": [
+      "Refactoring the mobile client codebase to support high concurrency.",
+      "Ensuring robust offline capability for users in low-connectivity areas."
+    ],
+    "notable_projects": [
+      "Next-generation ERP mobile module.",
+      "Real-time event logging system."
+    ],
+    "why_candidate_fits": "Alex has a proven track record of migrating legacy codebases to Clean Architecture and building offline-first sync engines."
+  }
+}

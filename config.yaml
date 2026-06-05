@@ -1,33 +1,27 @@
 model_selections:
   parallel_model: "gemini-3.5-flash"
-  synthesis_model: "gemini-3.5-flash"
+
 file_paths:
+  # Resume Pipeline Paths
   master_cv: "master_cv.md"
   job_description: "jd.txt"
   typst_template: "templates/resume.typ"
-  output_pdf: "resume.pdf"
-  output_cover_letter: "cover_letter.txt"
-  resume_json: "resume.json"
+  resume_json: "artifacts/resume.json"
+  output_pdf: "artifacts/resume.pdf"
+  
+  # Cover Letter Pipeline Paths
+  partial_master_cv: "master_cv.md"
+  company_profile: "company.txt"
+  cover_letter_template: "templates/cover_letter.typ"
+  research_template: "templates/research.typ"
+  cover_letter_json: "artifacts/cover_letter.json"
+  output_cover_letter_pdf: "artifacts/cover_letter.pdf"
+  output_research_pdf: "artifacts/research.pdf"
+
 hyperparameters:
   temperature: 0.2
   top_p: 0.8
 
-chunking:
-  # Strategies: 'by_header_depth' (default), 'by_section', 'single_document'
-  strategy: "by_header_depth"
-  skip_sections:
-    - "## 👤 Personal & Contact Information"
-    - "## 🎓 Formal Education"
-    - "## 🗣 Languages"
-    - "## 🏆 Honors & Awards"
-    - "## 📜 Advanced Certifications & Specialized Training"
-
-api_limits:
-  # Limit the concurrent API calls
-  concurrency_limit: 3
-  # Delay (in seconds) between requests to avoid burst rate limits
-  request_delay: 0.5
-
 prompts:
-  tailor_chunk: "prompts/tailor_chunk.txt"
-  synthesis: "prompts/synthesis.txt"
+  tailor_resume: "prompts/tailor_resume.md"
+  cover_letter: "prompts/cover_letter.md"

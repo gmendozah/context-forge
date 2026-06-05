@@ -91,10 +91,10 @@ Below is the required JSON schema structure. You must output a single, valid JSO
 ### CONTEXT TO TAILOR:
 
 #### TARGET JOB DESCRIPTION:
-from: jd.md
+{jd_content}
 
 #### CANDIDATE'S MASTER CV:
-from: from: master_cv.md file
+{master_cv_content}
 
 ---
 
