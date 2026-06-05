@@ -1,0 +1,78 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ContextForge: Seleccionar Pipeline...",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "${input:pipelineCommand}",
+        "${input:extraArgs}"
+      ]
+    },
+    {
+      "name": "ContextForge: Resume Pipeline (Agentic)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "resume"
+      ]
+    },
+    {
+      "name": "ContextForge: Resume Compile (from JSON)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "resume",
+        "--json",
+        "artifacts/resume.json"
+      ]
+    },
+    {
+      "name": "ContextForge: Cover Letter Pipeline (Agentic)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "cover-letter"
+      ]
+    },
+    {
+      "name": "ContextForge: Cover Letter Compile (from JSON)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "cover-letter",
+        "--json",
+        "artifacts/cover_letter.json"
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pipelineCommand",
+      "type": "pickString",
+      "description": "Selecciona qué comando de pipeline ejecutar:",
+      "options": [
+        "resume",
+        "cover-letter"
+      ],
+      "default": "resume"
+    },
+    {
+      "id": "extraArgs",
+      "type": "promptString",
+      "description": "Argumentos extra opcionales (ej: --json artifacts/resume.json):",
+      "default": ""
+    }
+  ]
+}
