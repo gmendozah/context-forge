@@ -73,6 +73,38 @@ class ResumePayload(BaseModel):
 # --- Formatting Helpers ---
 
 
+def format_contact_info_to_typst(contact_info: List[str]) -> str:
+    """Identifies and wraps URLs/emails in active link/mailto elements for Typst,
+    while escaping Typst control characters in the display text.
+    """
+    parts = []
+    url_regex = re.compile(
+        r'^(https?://)?(www\.)?([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+)(/[^\s]*)?$',
+        re.IGNORECASE
+    )
+    for item in contact_info:
+        item_strip = item.strip()
+        if not item_strip:
+            continue
+        
+        # Check for email
+        if "@" in item_strip:
+            escaped_display = item_strip.replace("&", "\\&").replace("#", "\\#").replace("@", "\\@")
+            parts.append(f'link("mailto:{item_strip}")[{escaped_display}]')
+        # Check for URL
+        elif any(domain in item_strip.lower() for domain in ["github.com", "linkedin.com", "portfolio", "http://", "https://"]) or url_regex.match(item_strip):
+            dest = item_strip
+            if not (dest.startswith("http://") or dest.startswith("https://")):
+                dest = "https://" + dest
+            escaped_display = item_strip.replace("&", "\\&").replace("#", "\\#").replace("@", "\\@")
+            parts.append(f'link("{dest}")[{escaped_display}]')
+        else:
+            # Plain string literal
+            escaped = item_strip.replace("\\", "\\\\").replace('"', '\\"').replace("&", "\\&").replace("#", "\\#")
+            parts.append(f'"{escaped}"')
+    return f"({', '.join(parts)})"
+
+
 def markdown_to_typst(text: str) -> str:
     """Converts basic Markdown syntax (bold, italics, links) into Typst syntax.
     Escapes special Typst control characters (&, #) in plain text segments.
@@ -138,6 +170,13 @@ DEFAULT_TYPST_STYLE = r"""// Design Tokens & Configuration function
   set page(
     paper: "us-letter",
     margin: (x: 1.5cm, y: 1.5cm),
+    footer: context [
+      #align(right)[
+        #text(fill: rgb("#4b5563"), size: 8pt)[
+          Page #counter(page).display("1 of 1", both: true)
+        ]
+      ]
+    ]
   )
 
   // Typography: Clean sans-serif with explicit weight hierarchy
@@ -164,12 +203,12 @@ DEFAULT_TYPST_STYLE = r"""// Design Tokens & Configuration function
       #text(size: 8.5pt, fill: rgb("#4b5563"))[#contact_info.join("   |   ")]
     ]
   ]
-  v(0.5em)
+  v(0.1em)
 }
 
 // Section Header with visual divider rule
 #let section_header(title) = {
-  v(0.6em)
+  v(0.4em)
   block(width: 100%, breakable: false)[
     #text(size: 10.5pt, weight: "bold", fill: rgb("#111827"))[#title]
     #v(-0.45em)
@@ -180,6 +219,17 @@ DEFAULT_TYPST_STYLE = r"""// Design Tokens & Configuration function
 
 // Experience Entry Component (Title/Company on left, Dates/Location on right)
 #let job_entry(company: "", role: "", dates: "", location: "", description: none, bullets: ()) = {
+  let intro-count = 0
+  if bullets.len() > 0 {
+    if bullets.at(0).type == "subheading" and bullets.len() > 1 {
+      intro-count = 2
+    } else {
+      intro-count = 1
+    }
+  }
+  let intro-bullets = bullets.slice(0, intro-count)
+  let rest-bullets = bullets.slice(intro-count)
+
   block(width: 100%, breakable: false)[
     #grid(
       columns: (1fr, auto),
@@ -189,24 +239,35 @@ DEFAULT_TYPST_STYLE = r"""// Design Tokens & Configuration function
       text(weight: "medium", style: "italic", size: 9.5pt, fill: rgb("#1f2937"))[#role],
       text(size: 9pt, fill: rgb("#4b5563"))[#dates]
     )
+    #v(0.1em)
+    #if description != none [
+      #text(size: 9pt, style: "italic", fill: rgb("#4b5563"))[#description]
+      #v(0.2em)
+    ]
+    #for bullet in intro-bullets [
+      #if bullet.type == "subheading" [
+        #v(0.3em)
+        #block(width: 100%, breakable: false)[
+          #text(weight: "bold", size: 9pt, fill: rgb("#1f2937"))[#bullet.text]
+        ]
+        #v(0.1em)
+      ] else [
+        #list.item(bullet.text)
+      ]
+    ]
   ]
-  v(0.1em)
-  if description != none {
-    text(size: 9pt, style: "italic", fill: rgb("#4b5563"))[#description]
-    v(0.2em)
-  }
   
-  for bullet in bullets {
-    if bullet.type == "subheading" {
-      v(0.3em)
-      block(width: 100%, breakable: false)[
+  for bullet in rest-bullets [
+    #if bullet.type == "subheading" [
+      #v(0.3em)
+      #block(width: 100%, breakable: false)[
         #text(weight: "bold", size: 9pt, fill: rgb("#1f2937"))[#bullet.text]
       ]
-      v(0.1em)
-    } else {
-      list.item(bullet.text)
-    }
-  }
+      #v(0.1em)
+    ] else [
+      #list.item(bullet.text)
+    ]
+  ]
   v(0.5em)
 }
 
@@ -218,7 +279,11 @@ DEFAULT_TYPST_STYLE = r"""// Design Tokens & Configuration function
       text(weight: "bold", size: 9.5pt, fill: rgb("#111827"))[
         #name
         #if link != none [
-          #text(size: 8.5pt, weight: "regular", fill: rgb("#3b82f6"))[ (#link) ]
+          #let target = link
+          #if not (target.starts-with("http://") or target.starts-with("https://")) {
+            target = "https://" + target
+          }
+          #text(size: 8.5pt, weight: "regular", fill: rgb("#3b82f6"))[ (#std.link(target)[#link]) ]
         ]
       ],
       if dates != none { text(size: 9pt, fill: rgb("#4b5563"))[#dates] }
@@ -234,11 +299,15 @@ DEFAULT_TYPST_STYLE = r"""// Design Tokens & Configuration function
 // Skills Row Component
 #let skill_category(category: "", items: ()) = {
   grid(
-    columns: (170pt, 1fr),
-    row-gutter: 0.5em,
-    column-gutter: 1em,
-    text(weight: "bold", fill: rgb("#1f2937"))[#category:],
-    text()[#items.join(", ")]
+    columns: (auto, 1fr),
+    column-gutter: 0.8em,
+    row-gutter: 0.6em,
+    align(right)[
+      #text(weight: "bold", fill: rgb("#1f2937"))[#category:]
+    ],
+    align(left)[
+      #text(fill: rgb("#374151"))[#items.join(", ")]
+    ]
   )
 }
 """
@@ -274,7 +343,7 @@ def generate_resume(
     body_parts.append("#show: resume\n")
 
     # 1. Header
-    contact_info_typst = to_typst_val(payload.contact_info)
+    contact_info_typst = format_contact_info_to_typst(payload.contact_info)
     body_parts.append(
         f"#resume_header(\n"
         f"  name: {to_typst_val(payload.name)},\n"
