@@ -26,7 +26,7 @@ The pipeline operates locally, unidirectionally, and in a decoupled manner, guar
 [ jd.txt ] (Temporary) ───────────────────────────────────────────────┼──> [ gemini-3.5-flash ] (Parallel)
                                                                       │    (Technical & Metric Alignment)
                                                                       ▼
-[ template.typ ] (Template) ──> [ Typst Compiler ] 📜 <── [ Context Aggregator ]
+[ resume.typ ] (Template) ──> [ Typst Compiler ] 📜 <── [ Context Aggregator ]
                                        ▲
                                        │
 [ resume.pdf ] ◄────────────────────── [ gemini-3.1-pro-preview ] (Sequential)
@@ -40,7 +40,7 @@ graph TD
     subgraph Input Files
         MCV[master_cv.md <br/> Private Master CV]
         JD[jd.txt <br/> Target Job Description]
-        TEMP[template.typ <br/> Typst Template]
+        TEMP[resume.typ <br/> Typst Template]
     end
 
     subgraph Parsing & Segmentation

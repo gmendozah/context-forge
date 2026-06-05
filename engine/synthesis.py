@@ -53,77 +53,67 @@ Example structure:
 }
 """
 
+
 async def run_synthesis_pipeline(
-    tailored_experience: str, 
-    jd_content: str, 
-    config: dict
+    tailored_experience: str, jd_content: str, config: dict
 ) -> dict:
     """Runs the sequential LLM synthesis phase to generate the tailored Professional Summary and Cover Letter."""
     if not jd_content:
         logger.warning("Job Description is empty. Skipping synthesis phase.")
         return {"summary": "", "cover_letter": ""}
-        
-    model_name = config.get("model_selections", {}).get("synthesis_model", "gemini-3.1-pro-preview")
+
+    model_name = config.get("model_selections", {}).get(
+        "synthesis_model", "gemini-3.5-flash"
+    )
     hyperparams = config.get("hyperparameters", {})
-    
+
     # Load synthesis prompt template
     prompt_config_path = config.get("prompts", {}).get("synthesis")
     prompt_template = load_prompt(
         config_path=prompt_config_path,
         default_path="prompts/synthesis.txt",
-        default_content=DEFAULT_SYNTHESIS_PROMPT
+        default_content=DEFAULT_SYNTHESIS_PROMPT,
     )
-    
+
     prompt = render_prompt(
         prompt_template,
-        {
-            "jd_content": jd_content,
-            "tailored_experience": tailored_experience
-        }
+        {"jd_content": jd_content, "tailored_experience": tailored_experience},
     )
-    
+
     generation_config = types.GenerateContentConfig(
         temperature=hyperparams.get("temperature", 0.3),
         top_p=hyperparams.get("top_p", 0.85),
-        response_mime_type="application/json"
+        response_mime_type="application/json",
     )
-    
+
     client = genai.Client()
-    
+
     try:
         logger.info(f"Running synthesis pipeline with model '{model_name}'...")
         response = await client.aio.models.generate_content(
-            model=model_name,
-            contents=prompt,
-            config=generation_config
+            model=model_name, contents=prompt, config=generation_config
         )
         logger.info("Successfully received response from synthesis model.")
-        
+
         try:
             data = json.loads(response.text)
             return {
                 "summary": data.get("summary", "").strip(),
-                "cover_letter": data.get("cover_letter", "").strip()
+                "cover_letter": data.get("cover_letter", "").strip(),
             }
         except json.JSONDecodeError as je:
-            logger.error(f"Failed to parse JSON response from synthesis model: {je}. Raw response: {response.text}")
+            logger.error(
+                f"Failed to parse JSON response from synthesis model: {je}. Raw response: {response.text}"
+            )
             return {
                 "summary": "",
                 "cover_letter": "",
-                "error": f"JSON parsing error: {je}"
+                "error": f"JSON parsing error: {je}",
             }
-            
+
     except APIError as e:
         logger.error(f"API Error in synthesis pipeline: {e}")
-        return {
-            "summary": "",
-            "cover_letter": "",
-            "error": f"API Error: {e}"
-        }
+        return {"summary": "", "cover_letter": "", "error": f"API Error: {e}"}
     except Exception as e:
         logger.error(f"Unexpected error in synthesis pipeline: {e}")
-        return {
-            "summary": "",
-            "cover_letter": "",
-            "error": f"Unexpected Error: {e}"
-        }
+        return {"summary": "", "cover_letter": "", "error": f"Unexpected Error: {e}"}

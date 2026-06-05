@@ -1,12 +1,13 @@
 model_selections:
   parallel_model: "gemini-3.5-flash"
-  synthesis_model: "gemini-3.1-pro-preview"
+  synthesis_model: "gemini-3.5-flash"
 file_paths:
   master_cv: "master_cv.md"
   job_description: "jd.txt"
   typst_template: "templates/resume.typ"
   output_pdf: "resume.pdf"
   output_cover_letter: "cover_letter.txt"
+  resume_json: "resume.json"
 hyperparameters:
   temperature: 0.2
   top_p: 0.8
